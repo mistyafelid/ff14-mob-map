@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <h1>Site Title</h1>
+      <h1>MobMap</h1>
     </header>
     <main>
       <transition :name="transitionName">
@@ -21,12 +21,17 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'App',
   data() {
     return {
       transitionName: 'slide-left'
     }
+  },
+  methods: {
+    ...mapActions(['fetchArea'])
   },
   watch: {
     $route(to, from) {
@@ -36,6 +41,11 @@ export default {
         this.transitionName = 'slide-left'
       }
     }
+  },
+  created() {
+    console.log('welcome')
+    this.fetchArea()
+    console.log(this.area)
   }
 }
 </script>
@@ -93,6 +103,8 @@ footer nav a {
   height: 100%;
   transition: all 0.8s cubic-bezier(0.55, 0, 0.1, 1);
   background: rgb(28, 32, 34);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .slide-left-enter,
 .slide-right-leave-active {
